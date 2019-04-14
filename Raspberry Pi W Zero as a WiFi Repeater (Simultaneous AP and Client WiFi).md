@@ -24,6 +24,7 @@ Additional changes I made:
 1. rather than running that hack in `crontab` as a `@reboot`, I added it to the end of `/etc/rc.local` as
   `/root/start-ap-managed-wifi.sh &`
 1. **teslausb** makes the root filesystem read-only to prevent corruption from the Tesla killing the power. This breaks
-  DHCP because it wants to store leases in `/var/log/dhcp`. To solve this, symlink that into somewhere mutable. 
-  teslausb sets this up at `/mutable` - so `rm -rf /var/lib/dhcp; ln -s /mutable/dhcp /var/lib/dhcp`
+  DHCP because it has mutable components. Assuming you've got a `/mutable` (teslausb does):
+  1. `rm -rf /var/log/dhcp; mkdir /mutable/var_log_dhcp; ln -s /mutable/var_log_dhcp /var/log/dhcp`
+  1. `rm -rf /var/lib/misc; mkdir /mutable/var_lib_misc; ln -s /mutable/var_lib_misc /var/lib/misc` 
 1. I didn't like the AP SSID being available but broken until the script kicks in, so I added `ifdown --force ap0` to the    start of it (before it sleeps). This stops devices connecting but failing. (Hacks upon hacks?)
