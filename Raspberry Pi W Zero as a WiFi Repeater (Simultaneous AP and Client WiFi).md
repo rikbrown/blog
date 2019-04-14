@@ -8,7 +8,7 @@ been wanting to set up a Raspberry Pi (running off the car USB) to do a few thin
      1. Firstly, so guests in my car can use the internet! (more focused on when my family/etc visit from the UK and 
         don't have data).
      1. Also for any IoT devices I want to connect to the internet like the 
-        [frunk button](https://github.com/rikbrown/tesla-frunk-button)] I'm experimenting with.
+        [frunk button](https://github.com/rikbrown/tesla-frunk-button) I'm experimenting with.
         
 Anyway, I spent quite some time trying to make this work. Conceptually, `hostapd` exists to do this. But getting the
 special sauce to make the Raspberry Pi Zero W successfully bridge a new AP and its existing client access point was
