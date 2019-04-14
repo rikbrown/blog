@@ -28,3 +28,4 @@ Additional changes I made:
     1. `rm -rf /var/log/dhcp; mkdir /mutable/var_log_dhcp; ln -s /mutable/var_log_dhcp /var/log/dhcp`
     1. `rm -rf /var/lib/misc; mkdir /mutable/var_lib_misc; ln -s /mutable/var_lib_misc /var/lib/misc` 
 1. I didn't like the AP SSID being available but broken until the script kicks in, so I added `ifdown --force ap0` to the    start of it (before it sleeps). This stops devices connecting but failing. (Hacks upon hacks?)
+1. I found I had to manually add my LAN DNS server to `/etc/resolv.conf`, presumably because DHCP couldn't update it due to teslausb's read-only root FS.
