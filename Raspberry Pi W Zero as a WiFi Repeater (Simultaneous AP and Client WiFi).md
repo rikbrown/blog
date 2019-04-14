@@ -20,9 +20,10 @@ https://blog.thewalr.us/2017/09/26/raspberry-pi-zero-w-simultaneous-ap-and-manag
 This basically works out the box. The sleep + restart network hack at the end is questionable but I don't want to
 dig into it much more.
 
-Changes I made:
-* rather than running that hack in `crontab` as a `@reboot`, I added it to the end of `/etc/rc.local` as
+Additional changes I made:
+1. rather than running that hack in `crontab` as a `@reboot`, I added it to the end of `/etc/rc.local` as
   `/root/start-ap-managed-wifi.sh &`
-* making that script also run `/root/bin/remountfs_rw` before. I don't really want this because the root FS could get
-  corrupted. My TODO is working out what part of this script needs a RW filesystem and seeing if I can save that to disk
-  forever.
+1. **teslausb** makes the root filesystem read-only to prevent corruption from the Tesla killing the power. This breaks
+  DHCP because it wants to store leases in `/var/log/dhcp`. To solve this, symlink that into somewhere mutable. 
+  teslausb sets this up at `/mutable` - so `rm -rf /var/lib/dhcp; ln -s /mutable/dhcp /var/lib/dhcp`
+1. I didn't like the AP SSID being available but broken until the script kicks in, so I added `ifdown --force ap0` to the    start of it (before it sleeps). This stops devices connecting but failing. (Hacks upon hacks?)
